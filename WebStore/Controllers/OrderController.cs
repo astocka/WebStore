@@ -213,7 +213,7 @@ namespace WebStore.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Completed(int? id)
+        public async Task<IActionResult> Completed(int? id)
         {
             if (id == null)
             {
@@ -221,14 +221,14 @@ namespace WebStore.Controllers
             }
             else
             {
-                var order =  _context.Orders.Include(s => s.Status).FirstOrDefault(t => t.Id == id);
+                var order =  await _context.Orders.Include(s => s.Status).FirstOrDefaultAsync(t => t.Id == id);
                 if (order == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    var statusId =  _context.OrderStatuses.FirstOrDefaultAsync(s => s.Name == "Completed");
+                    var statusId = await _context.OrderStatuses.FirstOrDefaultAsync(s => s.Name == "Completed");
                     order.OrderStatusId = statusId.Id;
                     _context.SaveChanges();
                 }
@@ -238,7 +238,7 @@ namespace WebStore.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Cancelled(int? id)
+        public async Task<IActionResult> Cancelled(int? id)
         {
             if (id == null)
             {
@@ -246,14 +246,14 @@ namespace WebStore.Controllers
             }
             else
             {
-                var order = _context.Orders.Include(s => s.Status).FirstOrDefault(t => t.Id == id);
+                var order = await _context.Orders.Include(s => s.Status).FirstOrDefaultAsync(t => t.Id == id);
                 if (order == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    var statusId = _context.OrderStatuses.FirstOrDefaultAsync(s => s.Name == "Cancelled");
+                    var statusId = await _context.OrderStatuses.FirstOrDefaultAsync(s => s.Name == "Cancelled");
                     order.OrderStatusId = statusId.Id;
                     _context.SaveChanges();
                 }

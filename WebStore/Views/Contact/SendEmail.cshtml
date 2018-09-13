@@ -3,7 +3,14 @@
     ViewBag.Title = "SendEmail";
 }
 
-<p class="display-4">Contact us</p>
+@if (!User.IsInRole("Admin"))
+{
+    <p class="display-4">Contact us</p>
+}
+else
+{
+    <p class="display-4">Send email</p>
+}
 <hr />
 
 @if (ViewBag.Error != null)
