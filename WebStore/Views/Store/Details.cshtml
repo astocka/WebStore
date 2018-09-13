@@ -1,0 +1,106 @@
+﻿@model WebStore.Models.Product
+
+@{
+    ViewData["Title"] = "The Web Store | Product Details";
+
+    var reviews = (IEnumerable<WebStore.Models.Review>)ViewBag.Reviews;
+    var ratingSum = ViewBag.RatingSum;
+    var ratingCount = ViewBag.RatingCount;
+
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = ratingSum / ratingCount;
+    }
+    var totalRating = decimal.Parse(rating.ToString());
+}
+
+<!-- Card -->
+<div class="card text-center">
+    <div class="card-header display-4">
+        Product details
+    </div>
+    <div class="row">
+        <div class="card-body text-left">
+            <div class="col-sm-4">
+                <img src="~/images/tumbnails/@Model.ImagePath" width="240rem" style="float: left;" class="pr-2" />
+            </div>
+            <div class="col-sm-12">
+                <h5 class="card-text">@Model.Category.Name</h5>
+                <h3 class="card-title font-weight-bold">@Model.Title</h3>
+                <h4 class="card-subtitle font-weight-light">by @Model.Author</h4>
+                <p>
+                    @for (var i = 0; i < totalRating; i++)
+                    {
+                        <img src="~/images/rating/star-glow.png"/>
+                    }
+                </p>
+                <h5 class="card-text">Released: @Model.Created.Year</h5>
+                <h5 class="card-text font-weight-bold">Price: @Model.Price.ToString("c")</h5>
+                <div class="btn-group align-bottom">
+                    <a class="btn btn-outline-dark" asp-action="Index">Back to list</a>
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-success" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id">Add to cart!</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        <!-- Navs -->
+        <ul class="nav nav-tabs" id="productDetails" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Customer reviews</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="productDetailsContent">
+            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                <div class="text-left">
+                    <p class="text-justify font-italic">@Model.Description</p>
+                </div>
+            </div>
+            <div class="tab-pane fade text-left" id="review" role="tabpanel" aria-labelledby="review-tab">
+                <!-- Rating sector -->
+                <h5 class="d-inline-block pt-2 pl-2 ml-2 mt-2">Average rating:</h5>
+                @for (var i = 0; i < totalRating; i++)
+                {
+                    <img src="~/images/rating/star-glow.png" />
+                }
+                @Html.Partial("_ReviewBox")
+                @if (!reviews.Any())
+                {
+                    <p>No reviews yet.</p>
+                }
+                else
+                {
+                    <h5>@ratingCount customer review(s)</h5>
+                    foreach (var review in reviews)
+                    {
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @for (var i = 0; i < review.Rating; i++)
+                                {
+                                    <img src="~/images/rating/star-glow.png" />
+                                }
+                                <br />
+                                <i class="font-weight-bold">@review.Created.Day-@review.Created.Month-@review.Created.Year at @review.Created.Hour:@review.Created.Minute <span class="font-weight-bold">@review.UserName</span> added review: </i>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="p-2 m-2">
+                                    @review.Content
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                <!-- Rating end -->
+            </div>
+        </div>
+        <!-- Navs end -->
+    </div>
+</div>

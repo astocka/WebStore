@@ -1,0 +1,40 @@
+﻿@model List<WebStore.Models.AppUser>
+
+@{
+    ViewData["Title"] = "The Web Store | Users";
+}
+
+<h2 class="display-4">Users</h2>
+<hr/>
+
+<div class="col-sm-8">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>
+                        @if (user.Id != 1)
+                        {
+                            <form asp-controller="Role" asp-action="AddToUserRole" asp-route-userName="@user.UserName">
+                                <button class="btn btn-outline-warning" type="submit">Add to user role</button>
+                            </form>
+                            <a class="btn btn-danger" asp-controller="Account" asp-action="Delete" asp-route-userName="@user.UserName">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

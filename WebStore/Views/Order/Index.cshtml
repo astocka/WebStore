@@ -1,0 +1,69 @@
+﻿@model List<WebStore.Models.Order>
+
+@{
+    ViewData["Title"] = "The Web Store | Orders";
+}
+
+<h2 class="display-4">Orders</h2>
+<hr />
+
+@if (User.IsInRole("Admin"))
+{
+    <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Name</th>
+                <th colspan="2">Address</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Status</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>@item.OrderDate.ToString("d")</td>
+                <td>@item.OrderTotal.ToString("c")</td>
+                <td>@item.FirstName @item.LastName</td>
+                <td>@item.Address</td>
+                <td>@item.Zip @item.City</td>
+                <td>@item.State</td>
+                <td>@item.Country</td>
+                <td>
+                    @if (item.Status.Name == "Awaiting Payment")
+                    {
+                        <span class="text-warning">@item.Status.Name</span>
+                    }
+                    else
+                    {
+                        @item.Status.Name
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="InvoicePdf" asp-route-orderId="@item.Id"><img src="~/images/icons8-pdf-48.png"/></a>
+                    <a class="btn btn-sm btn-outline-dark" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <form asp-controller="Order" asp-action="Shipped" asp-route-id="@item.Id" method="post">
+                        <button class="btn btn-sm btn-outline-warning">Shipped</button>
+                    </form>
+                    <form asp-controller="Order" asp-action="Cancelled" asp-route-id="@item.Id" method="post">
+                        <button class="btn btn-sm btn-outline-warning">Cancelled</button>
+                    </form>
+                    <form asp-controller="Order" asp-action="Completed" asp-route-id="@item.Id" method="post">
+                        <button class="btn btn-sm btn-outline-warning">Completed</button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}

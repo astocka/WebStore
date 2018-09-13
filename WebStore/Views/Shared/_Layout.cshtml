@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link href="~/lib/bootstrap/css/navbar-top.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/css/album.css" rel="stylesheet">
+
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/regular.css" integrity="sha384-zkhEzh7td0PG30vxQk1D9liRKeizzot4eqkJ8gB3/I+mZ1rjgQk+BSt2F6rT2c+I" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/solid.css" integrity="sha384-VGP9aw4WtGH/uPAOseYxZ+Vz/vaTb1ehm1bwx92Fm8dTrE+3boLfF1SpAtB1z7HW" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7" crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+@Html.Partial("_Navbar")
+<main role="main" class="container">
+    @RenderBody()
+</main>
+<footer>
+    <p class="mt-5 mb-3 text-muted text-center"> The Web Store | @DateTime.Now.Year</p>
+</footer>
+
+<!-- jQuery, Popper.js, Bootstrap JS, JavaScript -->
+<script src="~/lib/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/lib/popper.min.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/scripts/site.js"></script>
+<script src="~/js/app.js" type="text/javascript"></script>
+</body>
+</html>

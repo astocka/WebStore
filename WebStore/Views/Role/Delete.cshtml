@@ -1,0 +1,35 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole<int>
+
+@{
+    ViewData["Title"] = "The Web Store | Delete Role";
+}
+
+<h2 class="display-4">Delete role</h2>
+<hr />
+
+<div class="col-sm-6">
+    <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Role</th>
+                <th colspan="2">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.Name</td>
+                <td>
+                    <div class="btn-group">
+                        <form asp-controller="Role" asp-action="DeleteConfirm" method="post">
+                            <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+                            <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
+                        </form>
+                        <a class="btn btn-outline-dark" asp-controller="OrderStatus" asp-action="Index">Back to list</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

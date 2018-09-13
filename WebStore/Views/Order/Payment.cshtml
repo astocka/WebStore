@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model WebStore.Models.Order
+
+@{
+    ViewData["Title"] = "The Web Store | Payment";
+}
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2 class="display-4 text-center">Payment form</h2>
+        <p class="lead text-center">Please fill in the form below to pay for the order.</p>
+        <hr />
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 order-md-1 align-content-center">
+            <h4 class="mb-3">Payment</h4>
+            <form class="needs-validation" asp-controller="Order" asp-action="PaymentConfirm" method="post" novalidate>
+                <input asp-for="Id" type="hidden" value="@Model.Id" />
+                <div class="row">
+                    <div class="d-block my-3">
+                        <div class="custom-control custom-radio">
+                            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="credit">Credit card</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input">
+                            <label class="custom-control-label" for="debit">Debit card</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input">
+                            <label class="custom-control-label" for="paypal">PayPal</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="cc-name">Name on card</label>
+                        <input type="text" class="form-control" id="cc-name" placeholder="">
+                        <small class="text-muted">Full name as displayed on card</small>
+                        <div class="invalid-feedback">
+                            Name on card is required
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="cc-number">Credit card number</label>
+                        <input type="number" class="form-control" id="cc-number" placeholder="">
+                        <div class="invalid-feedback">
+                            Credit card number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="cc-expiration">Expiration</label>
+                        <input type="date" class="form-control" id="cc-expiration" placeholder="">
+                        <div class="invalid-feedback">
+                            Expiration date required
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="cc-cvv">CVV</label>
+                        <input type="number" class="form-control" id="cc-cvv" placeholder="">
+                        <div class="invalid-feedback">
+                            Security code required
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-outline-dark" asp-controller="User" asp-action="Orders">Back to orders</a>
+                    <button type="submit" class="btn btn-success">Pay</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model WebStore.Models.AppUser
+
+@{
+    ViewData["Title"] = "The Web Store | Delete User";
+}
+
+<h2 class="display-4">Delete the user</h2>
+<hr />
+
+<div>
+    <div class="col-sm-6">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>User name</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.UserName</td>
+                <td>@Model.Email</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="btn-group">
+    <form asp-controller="Account" asp-action="DeleteConfirm" method="post">
+        <input type="hidden" asp-for="@Model.UserName" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+    <a class="btn btn-outline-dark" asp-controller="Account" asp-action="Index">Back to list</a>
+</div>

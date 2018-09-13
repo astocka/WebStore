@@ -1,0 +1,44 @@
+﻿@model List<WebStore.Models.Category>
+
+@{
+    ViewData["Title"] = "The Web Store | Categories";
+}
+
+<h2 class="display-4">Categories</h2>
+<hr />
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a class="btn btn-success" asp-controller="Category" asp-action="Create">Add category</a>
+    </p>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="col-sm-6">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th colspan="2">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>
+                            <a class="btn btn-warning" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+

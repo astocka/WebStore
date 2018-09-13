@@ -1,0 +1,102 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model WebStore.Models.Order
+
+@{
+    ViewData["Title"] = "The Web Store | Checkout";
+}
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2 class="display-4 text-center">Checkout form</h2>
+        <p class="lead text-center">Please fill in the form below to finalize the order.</p>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+                <span class="badge badge-warning badge-pill">@ViewBag.CartItems</span>
+            </h4>
+            <ul class="list-group mb-3">
+                @foreach (var item in ViewBag.Cart)
+                {
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">@item.Product.Title</h6>
+                            <small class="text-muted">@item.Product.Author</small>
+                        </div>
+                        <span class="text-muted">@((item.Product.Price * item.Quantity).ToString("c"))</span>
+                    </li>
+                }
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="font-weight-bold">Total: </span>@(ViewBag.CartTotal.ToString("c"))
+                </li>
+            </ul>
+
+        </div>
+        <div class="col-md-8 order-md-1 align-content-center">
+            <h4 class="mb-3">Billing address</h4>
+            <form class="needs-validation" asp-controller="Order" asp-action="Checkout" method="post" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FirstName">First name</label>
+                        <input type="text" class="form-control" asp-for="FirstName" placeholder="First Name" value="" required>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="LastName">Last name</label>
+                        <input type="text" class="form-control" asp-for="LastName" placeholder="Last Name" value="" required>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email">Email</label>
+                    <input type="text" class="form-control" asp-for="Email" placeholder="Email" required>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Address">Address</label>
+                    <input type="text" class="form-control" asp-for="Address" placeholder="Address" required>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="City">City</label>
+                        <input type="text" class="form-control" asp-for="City" placeholder="City" required>
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="State">State</label>
+                        <input type="text" class="form-control" asp-for="State" placeholder="State" required>
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Zip">Zip</label>
+                        <input type="text" class="form-control" asp-for="Zip" placeholder="" required>
+                        <span asp-validation-for="Zip" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label asp-for="Country">Country</label>
+                        <input type="text" class="form-control" asp-for="Country" placeholder="Country" required>
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+                </div>
+                <hr class="mb-4">
+
+                <hr class="mb-4 btn-group">
+                <a class="btn btn-outline-dark" asp-controller="Cart" asp-action="Index">Back to cart</a>
+                <button class="btn btn-success" type="submit">Continue</button>
+            </form>
+        </div>
+    </div>
+</div>

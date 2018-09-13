@@ -1,0 +1,23 @@
+﻿@model List<WebStore.Models.CartItem>
+
+@{
+    ViewData["Title"] = "The Web Store | Order Details";
+}
+
+<h2 class="display-4">Order details</h2>
+<hr />
+@foreach (var item in Model)
+{
+    <div class="card border-light mb-6" style="max-width: 24rem;">
+        <div class="card-body">
+            <h5 class="card-title"><strong>@item.Title</strong> by @item.Author </h5>
+            <p class="card-text">Quantity: @item.Quantity item(s)</p>
+            <p class="card-text">Unit price: @item.Price.ToString("c")</p>
+            <p class="card-text"><stong>Total: </stong>@((item.Price * item.Quantity).ToString("c"))</p>
+        </div>
+    </div>
+    <hr />
+}
+<div class="btn-group">
+    <a class="btn btn-outline-dark" asp-action="Orders">Back to list</a>
+</div>

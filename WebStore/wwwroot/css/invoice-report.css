@@ -1,0 +1,32 @@
+﻿body {
+    margin: 0px;
+    font-family: Arial, sans-serifs;
+}
+
+.company-brand {
+    font-size: larger;
+}
+
+table {
+    clear: both;
+    border: 1px solid #6c757d;
+    border-collapse: collapse;
+    margin: auto;
+}
+th {
+    background-color: #ffc107;
+    color: white;
+}
+td, th {
+    border: 1px solid #6c757d;
+    padding: 5px;
+}
+.numeric-cell {
+    text-align:right;
+}
+ 
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+} 

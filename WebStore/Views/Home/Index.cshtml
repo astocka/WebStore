@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WebStore.Models.Product>
+
+@{
+    ViewData["Title"] = "The Web Store";
+}
+
+@if (!User.IsInRole("Admin"))
+{
+    <h2 class="text-center font-weight-light display-4">Web Store<span class="text-warning font-weight-bold"> | </span><span class="small font-italic"> Music, Books & Movies</span></h2>
+    <hr/>
+    @await Html.PartialAsync("_Carousel")
+}

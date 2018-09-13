@@ -1,0 +1,90 @@
+﻿@using WebStore.Models
+@model List<WebStore.Models.Category>
+
+@{
+    ViewData["Title"] = "The Web Store";
+}
+
+<h2 class="display-4">@ViewBag.CategoryName</h2>
+<hr />
+
+@if (User.IsInRole("Admin"))
+{
+    <h5>Add new product from category:</h5>
+    <div class="btn-group">
+        @foreach (var category in Model)
+        {
+            <a class="btn btn-success" asp-controller="Product" asp-action="Create" asp-route-categoryId="@category.Id">@category.Name</a>
+        }
+    </div>
+}
+
+
+@if (!User.IsInRole("Admin"))
+{
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+
+                @foreach (var item in ViewBag.Products)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img class="card-img-top" src="~/images/tumbnails/@item.ImagePath" alt="@item.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Title (@item.Created.ToString("yyyy"))</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">by @item.Author</h6>
+                                <p class="card-text">Price: @item.Price.ToString("c")</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-dark" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                        <a class="btn btn-success" asp-controller="Cart" asp-action="AddToCart" asp-route-Id="@item.Id">Add to cart!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="clearfix"></div>
+@if (User.IsInRole("Admin"))
+{
+    <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Photo</th>
+                <th>Category</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Created</th>
+                <th>Price</th>
+                <th colspan="2">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Products)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td><img src="~/images/tumbnails/@item.ImagePath" width="60" /></td>
+                    <td>@item.Category.Name</td>
+                    <td>@item.Title</td>
+                    <td>@item.Author</td>
+                    <td>@item.Created.ToString("d")</td>
+                    <td>@item.Price.ToString("c")</td>
+                    <td>
+                        <a class="btn btn-outline-warning btn-sm" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-outline-danger btn-sm" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-outline-info btn-sm" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,63 @@
+﻿@model WebStore.Models.AppUser
+
+@{
+    ViewData["Title"] = "The Web Store | User profile";
+    var i = 1;
+}
+
+<div class="row">
+    <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
+            <a class="nav-link" id="v-pills-reviews-tab" data-toggle="pill" href="#v-pills-reviews" role="tab" aria-controls="v-pills-reviews" aria-selected="false">Reviews</a>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <!-- Profile -->
+                <p class="display-4">Profile</p>
+                <hr/>
+                <dl class="row">
+                    <dt class="col-sm-3">Login</dt>
+                    <dd class="col-sm-9">@Model.UserName</dd>
+                    <dt class="col-sm-3">Email address</dt>
+                    <dd class="col-sm-9">@Model.Email
+                    <dt class="col-sm-3">Password</dt>
+                    <dd class="col-sm-9"><a class="link" asp-controller="User" asp-action="ChangePassword">Change password</a></dd>
+                </dl>
+                <!-- End profile -->
+            </div>
+            <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab">
+                <!-- Reviews -->
+                <p class="display-4">Reviews</p>
+                <hr/>
+                @if (ViewBag.UserReview.Count == 0)
+                {
+                    <p>No reviews yet.</p>
+                }
+                else
+                {
+                    <ul class="list-unstyled">
+                        @foreach (var review in ViewBag.UserReview)
+                        {
+                            <li class="font-weight-light">#@i Posted on: @review.Created</li>
+                            <li class="font-weight-light">
+                                Rating:
+                                @for (var j = 0; j < review.Rating; j++)
+                                {
+                                    <img src="~/images/rating/star-glow.png" />
+                                }
+                            </li>
+                            <li class="font-weight-light">Product: @review.Product.Title by @review.Product.Author</li>
+                            <li class="text-monospace"><span class="font-weight-light">Content: </span>@review.Content</li>
+                            <li><hr /></li>
+                            i += 1;
+                        }
+                    </ul>
+                }
+                <!-- End reviews -->
+            </div>
+        </div>
+    </div>
+</div>

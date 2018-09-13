@@ -1,0 +1,29 @@
+﻿@using WebStore.Migrations
+@model WebStore.Models.Order
+
+@{
+    ViewData["Title"] = "The Web Store | Order Status";
+}
+
+<h2 class="display-4">Change order status</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Status" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Status.Id" />
+            <div class="form-group">
+                <label asp-for="Status.Name" class="control-label"></label>
+                <input asp-for="Status.Name" class="form-control" />
+                <span asp-validation-for="Status.Name" class="text-danger"></span>
+            </div>
+            <button class="btn btn-success" asp-action="Status" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-outline-dark" asp-controller="Order" asp-action="Index">Back to orders</a>
+</div>
+

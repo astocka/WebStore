@@ -1,0 +1,39 @@
+﻿@model List<WebStore.Models.OrderStatus>
+
+@{
+    ViewData["Title"] = "The Web Store | Order Status";
+}
+
+<h2 class="display-4">Order status</h2>
+<hr />
+
+<div>
+    <p>
+        <a class="btn btn-success" asp-controller="OrderStatus" asp-action="Create">Add new status</a>
+    </p>
+    
+    <div class="col-sm-6">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var status in Model)
+            {
+                <tr>
+                    <td>@status.Id</td>
+                    <td>@status.Name</td>
+                    <td>
+                        <a class="btn btn-warning" asp-controller="OrderStatus" asp-action="Edit" asp-route-id="@status.Id">Edit</a>
+                        <a class="btn btn-danger" asp-controller="OrderStatus" asp-action="Delete" asp-route-id="@status.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

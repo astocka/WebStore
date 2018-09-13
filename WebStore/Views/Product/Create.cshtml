@@ -1,0 +1,51 @@
+﻿@using WebStore.Models
+@model WebStore.Models.Product
+
+@{
+    ViewData["Title"] = "The Web Store | New Product";
+}
+
+<h2 class="display-4">Add product</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Product" asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" type="date" class="form-control" />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" cols="10" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <input asp-for="ImagePath" class="form-control"/>
+            </div>
+            <input asp-for="CategoryId" type="hidden" value="@ViewBag.Category" />
+            <div class="form-group">
+                <a class="btn btn-outline-dark" asp-controller="Store" asp-action="Index">Back to list</a>
+                <input type="submit" value="Create" class="btn btn-success"/>
+            </div>
+        </form>
+    </div>
+</div>

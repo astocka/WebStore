@@ -1,0 +1,35 @@
+﻿@model WebStore.Models.OrderStatus
+
+@{
+    ViewData["Title"] = "The Web Store | Delete Order Status";
+}
+
+<h2 class="display-4">Delete the order status</h2>
+<hr/>
+
+<div>
+    <hr />
+    <div class="col-sm-6">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.Name</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="btn-group">
+    <form asp-controller="OrderStatus" asp-action="Delete" method="post">
+        <input type="hidden" asp-for="@Model.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+    <a class="btn btn-outline-dark" asp-controller="OrderStatus" asp-action="Index">Back to list</a>
+</div>

@@ -1,0 +1,47 @@
+﻿@model List<WebStore.Models.Order>
+
+@{
+    ViewData["Title"] = "The Web Store | Order history";
+    var i = 1;
+}
+
+<h2 class="display-4">Order history</h2>
+<hr />
+
+@if (Model.Count == 0)
+{
+    <div class="text-left">
+        No orders yet.
+    </div>
+}
+else
+{
+     foreach(var order in Model)
+     {
+         <div class="card bg-light mb-6" style="max-width: 18rem; float: left;">
+             <div class="card-header"><a class="text-secondary" asp-controller="User" asp-action="Details" asp-route-orderId="@order.Id"><strong>order details</strong></a></div>
+             <div class="card-body">
+                 <h5 class="card-title">Order #@i</h5>
+                 <p class="card-text"><strong>Date: </strong>@order.OrderDate.ToShortDateString() @order.OrderDate.ToShortTimeString()</p>
+                 <p class="card-text"><strong>Total: </strong>@order.OrderTotal.ToString("c")</p>
+                 <p class="card-text"><strong>Status:</strong></p>
+                 <p class="card-text">
+                     @if (order.Status.Name == "Awaiting Payment")
+                     {
+                     <span class="text-danger">@order.Status.Name</span>
+                     }
+                     else
+                     {
+                         @order.Status.Name
+                     }
+                 </p>
+                 <div class="btn-group">
+                     <a asp-controller="Home" asp-action="InvoicePdf" asp-route-orderId="@order.Id"><img src="~/images/icons8-pdf-48.png"/></a>
+                     <a asp-controller="Order" asp-action="Payment" asp-route-orderId="@order.Id"><img src="~/images/icons8-debit-card-48.png"/></a>
+                 </div>
+             </div>
+         </div>
+         i += 1;
+     }
+}
+<div class="clearfix"></div>

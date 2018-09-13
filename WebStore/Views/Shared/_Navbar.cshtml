@@ -1,0 +1,98 @@
+﻿@using Microsoft.AspNetCore.Http
+@using WebStore.Helpers
+@using WebStore.Models
+
+<nav class="navbar navbar-expand-md navbar-dark bg-warning mb-4 shadow p-3 mb-5 align-items-center">
+    <img src="~/images/icons8-small-business-48.png"/><a class="navbar-brand" asp-controller="Home" asp-action="Index"><span style="text-shadow: 0px 0px 7px rgba(255, 255, 255, 0.7); color: white;">Web Store</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            @if (!User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index"><span class="font-weight-bold">Home</span> <span class="sr-only">(current)</span></a>
+                </li>
+            }
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="font-weight-bold">Store</span></a>
+                <div class="dropdown-menu" aria-labelledby="dropdown1">
+                    <a class="dropdown-item" asp-controller="Store" asp-action="Index" asp-route-category="1">Music</a>
+                    <a class="dropdown-item" asp-controller="Store" asp-action="Index" asp-route-category="2">Books</a>
+                    <a class="dropdown-item" asp-controller="Store" asp-action="Index" asp-route-category="3">Movies</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-controller="Store" asp-action="Index">All products</a>
+                </div>
+            </li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Category" asp-action="Index"><span class="font-weight-bold">Categories</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Order" asp-action="Index"><span class="font-weight-bold">Orders</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="OrderStatus" asp-action="Index"><span class="font-weight-bold">Order Status</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Role" asp-action="Index"><span class="font-weight-bold">Role</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Account" asp-action="Index"><span class="font-weight-bold">Users</span></a>
+                </li>
+            }
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Account" asp-action="Login"><span class="font-weight-bold">Log in</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Account" asp-action="Register"><span class="font-weight-bold">Register</span></a>
+                </li>
+            }
+            else
+            {
+                if (!User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Contact" asp-action="SendEmail"><span class="font-weight-bold">Contact</span></a>
+                    </li>
+                }
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle @ViewBag.MyAccount" href="#" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="font-weight-bold">My account</span></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown1">
+                        @if (!User.IsInRole("Admin"))
+                        {
+                            <a class="dropdown-item @ViewBag.MyAccountProfile" asp-controller="User" asp-action="Profile" asp-route-userName="@User.Identity.Name">Profile: @User.Identity.Name</a>
+                            <a class="dropdown-item @ViewBag.MyAccountOrderHistory" asp-controller="User" asp-action="Orders">Order History</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item @ViewBag.ShoppingCart" asp-controller="Cart" asp-action="Index">Shopping cart</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-controller="User" asp-action="ChangePassword">Change Password</a>
+                        }
+                        @if(User.IsInRole("Admin"))
+                        {
+                            <a class="dropdown-item" asp-controller="Admin" asp-action="ChangePassword">Change Password</a>
+                        }
+                        <a class="dropdown-item" asp-controller="Account" asp-action="LogOut">Log out</a>
+                    </div>
+                </li>
+            }
+        </ul>
+        @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+        {
+            <div class="nav-item text-md-right">
+                <a class="nav-link" asp-controller="Cart" asp-action="Index"><img src="~/images/icons8-shopping-cart-50.png" /><span class="font-weight-bold text-light">Cart</span></a>
+            </div>
+        }
+        <form class="form-inline my-2 my-lg-0" asp-controller="Store" asp-action="Search" method="post">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search by title or author" aria-label="Search">
+            <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+
+
